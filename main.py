@@ -42,21 +42,31 @@ setup_GPIOPorts()
 REFRESH_MS = 7
 current_time_ms = lambda: int(round(time.time() * 1000))
 
+
+
+
 def char_on(char):
     GPIO.output(GPIODictionary[char], GPIO.HIGH)    
 
 def char_off(char):
     GPIO.output(GPIODictionary[char], GPIO.LOW)
 
-def show(word, char_on_ms, char_off_ms, word_on_ms):
-    [type_char(char, char_on_ms, char_off_ms) for char in word]
-    word_on(word, word_on_ms)
-
-def type_char(char, on_ms, off_ms):
+def chooseCharBlink(char, on_ms, off_ms):
     char_on(char)
     time.sleep(on_ms)
     char_off(char)
     time.sleep(off_ms)
+
+
+def show(word, char_on_ms, char_off_ms, word_on_ms):
+    [type_char(char, char_on_ms, char_off_ms) for char in word]
+    word_on(word, word_on_ms)
+
+# def type_char(char, on_ms, off_ms):
+#     char_on(char)
+#     time.sleep(on_ms)
+#     char_off(char)
+#     time.sleep(off_ms)
 
 def word_on(word, on_ms):
     i = 0
@@ -67,18 +77,14 @@ def word_on(word, on_ms):
         char_off(word[i])
         i = (i + 1) % word.len
 
-def setup_GPIOPorts():
-    GPIO.setmode(GPIO.BOARD)
-    for i in GPIOPorts:
-        GPIO.setup(i, GPIO.OUT)   
 
-def char_on(char):
-    GPIO.output(GPIODictionary[char], GPIO.HIGH)    
+readInput = raw_input("Input string: ")
 
-def char_off(char):
-    GPIO.output(GPIODictionary[char], GPIO.LOW)
+charList = list(readInput.upper())
 
-import string
-show(string.uppercase, 1000, 500, 1000)
+listLength = len(charList)
 
-GPIO.cleanup()
+for i, val in enumerate(charList):
+    print(val)
+    chooseCharBlink(val, 5, 1)
+
