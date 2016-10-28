@@ -32,10 +32,21 @@ GPIODictionary = {
     "Z": GPIOPorts[25]
     }
 
+def setup_GPIOPorts():
+    GPIO.setmode(GPIO.BOARD)
+    for i in GPIOPorts:
+        GPIO.setup(i, GPIO.OUT)
+
+setup_GPIOPorts()
+
 REFRESH_MS = 7
 current_time_ms = lambda: int(round(time.time() * 1000))
 
-setup_GPIOPorts()
+def char_on(char):
+    GPIO.output(GPIODictionary[char], GPIO.HIGH)    
+
+def char_off(char):
+    GPIO.output(GPIODictionary[char], GPIO.LOW)
 
 def show(word, char_on_ms, char_off_ms, word_on_ms):
     [type_char(char, char_on_ms, char_off_ms) for char in word]
@@ -55,16 +66,5 @@ def word_on(word, on_ms):
         time.sleep(REFRESH_MS)
         char_off(word[i])
         i = (i + 1) % word.len
-
-def setup_GPIOPorts():
-    GPIO.setmode(GPIO.BOARD)
-    for i in GPIOPorts:
-        GPIO.setup(i, GPIO.OUT)   
-
-def char_on(char):
-    GPIO.output(GPIODictionary[char], GPIO.HIGH)    
-
-def char_off(char):
-    GPIO.output(GPIODictionary[char], GPIO.LOW)
 
 GPIO.cleanup()
