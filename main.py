@@ -45,28 +45,35 @@ current_time_ms = lambda: int(round(time.time() * 1000))
 
 
 
+
+
 def char_on(char):
     GPIO.output(GPIODictionary[char], GPIO.HIGH)    
 
 def char_off(char):
     GPIO.output(GPIODictionary[char], GPIO.LOW)
 
+def dim_animation(char):
+    for x in range(0, 5)
+        char_on(char)    
+        time.sleep(.09)
+        char_off(char)
+
 def chooseCharBlink(char, on_ms, off_ms):
+    dim_animation(char)
+    time.sleep(.1)
     char_on(char)
     time.sleep(on_ms)
     char_off(char)
     time.sleep(off_ms)
 
 
+
+
 def show(word, char_on_ms, char_off_ms, word_on_ms):
     [type_char(char, char_on_ms, char_off_ms) for char in word]
     word_on(word, word_on_ms)
 
-# def type_char(char, on_ms, off_ms):
-#     char_on(char)
-#     time.sleep(on_ms)
-#     char_off(char)
-#     time.sleep(off_ms)
 
 def word_on(word, on_ms):
     i = 0
@@ -86,5 +93,5 @@ listLength = len(charList)
 
 for i, val in enumerate(charList):
     print(val)
-    chooseCharBlink(val, 5, 1)
+    chooseCharBlink(val, 5, .1)
 
