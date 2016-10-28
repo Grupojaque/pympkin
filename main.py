@@ -67,4 +67,18 @@ def word_on(word, on_ms):
         char_off(word[i])
         i = (i + 1) % word.len
 
+def setup_GPIOPorts():
+    GPIO.setmode(GPIO.BOARD)
+    for i in GPIOPorts:
+        GPIO.setup(i, GPIO.OUT)   
+
+def char_on(char):
+    GPIO.output(GPIODictionary[char], GPIO.HIGH)    
+
+def char_off(char):
+    GPIO.output(GPIODictionary[char], GPIO.LOW)
+
+import string
+show(string.uppercase, 1000, 500, 1000)
+
 GPIO.cleanup()
